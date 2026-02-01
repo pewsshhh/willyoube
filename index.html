@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love 💙</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(135deg, #14b8a6, #f9a8d4, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+.container {
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+h2 {
+    animation: fadeIn 1s ease;
+}
+
+img {
+    width: 220px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.1);
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#yesBtn {
+    background-color: white;
+    color: #14b8a6;
+    font-size: 22px;
+    padding: 15px 35px;
+}
+
+#yesBtn:active {
+    transform: scale(0.95);
+}
+
+#noBtn {
+    background-color: #ffffff88;
+    color: #333;
+    position: absolute;
+}
+
+.final-message {
+    font-size: 22px;
+    margin-top: 20px;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 5s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0.7; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="teddySection">
+        <img src="/home/doomslayer/Desktop/forgive-me/teddy.png" id="teddy" />
+        <h2>Tap the teddy 🧸</h2>
+    </div>
+
+    <div id="questionSection" class="hidden">
+        <h2>Will you forgive me and be my valentine? 💖</h2>
+        <button id="yesBtn">YES 💕</button>
+        <button id="noBtn">no</button>
+    </div>
+
+    <div id="finalSection" class="hidden">
+        <div class="final-message">
+            I am glad you didn't touch the no button 🥹❤️<br><br>
+            Please text "I love you jaan" on WhatsApp for more info 💌
+        </div>
+    </div>
+
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="/home/doomslayer/Desktop/forgive-me/tummile.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+const teddy = document.getElementById("teddy");
+const teddySection = document.getElementById("teddySection");
+const questionSection = document.getElementById("questionSection");
+const finalSection = document.getElementById("finalSection");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const bgMusic = document.getElementById("bgMusic");
+
+// Teddy click
+teddy.addEventListener("click", () => {
+    teddySection.classList.add("hidden");
+    questionSection.classList.remove("hidden");
+    bgMusic.play().catch(() => {});
+});
+
+// YES click
+yesBtn.addEventListener("click", () => {
+    questionSection.classList.add("hidden");
+    finalSection.classList.remove("hidden");
+
+    confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 }
+    });
+
+
+});
+
+// NO button moves
+function moveButton() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+}
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+// Create floating hearts
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}, 500);
+</script>
+
+</body>
+</html>
+
